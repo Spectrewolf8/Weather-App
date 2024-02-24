@@ -64,6 +64,9 @@
         align-items: center;
         flex-wrap: wrap;
       }
+      .section i {
+        color: #666;
+      }
       .section img {
         width: 100%;
         height: auto;
@@ -198,6 +201,27 @@
                     {% elif weather_condition == 'windy' %}
                     <i class="fas fa-wind fa-10x"></i>
                     <!-- Windy -->
+                    {% elif weather_condition == 'fog' %}
+                    <i class="fas fa-smog fa-10x"></i>
+                    <!-- Fog -->
+                    {% elif weather_condition == 'haze' %}
+                    <i class="fas fa-smog fa-10x"></i>
+                    <!-- Haze -->
+                    {% elif weather_condition == 'sleet' %}
+                    <i class="fas fa-cloud-meatball fa-10x"></i>
+                    <!-- Sleet -->
+                    {% elif weather_condition == 'drizzle' %}
+                    <i class="fas fa-cloud-rain fa-10x"></i>
+                    <!-- Drizzle -->
+                    {% elif weather_condition == 'hail' %}
+                    <i class="fas fa-snowflake fa-10x"></i>
+                    <!-- Hail -->
+                    {% elif weather_condition == 'tornado' %}
+                    <i class="fas fa-poo-storm fa-10x"></i>
+                    <!-- Tornado -->
+                    {% elif weather_condition == 'mist' %}
+                    <i class="fas fa-smog fa-10x"></i>
+                    <!-- Mist -->
                     {% else %}
                     <i class="fas fa-question-circle fa-10x"></i>
                     <!-- Default for unknown conditions -->
@@ -254,12 +278,15 @@
                   <h2>Astro details</h2>
                   <p>
                     <span class="label">Sunrise:</span>
-                    <span class="value">{{ astro_data['sunrise'] }} <i class="fas fa-sun"></i></span>
+                    <span class="value"
+                      >{{ astro_data['sunrise'] }} <i class="fas fa-sun"></i
+                    ></span>
                   </p>
                   <p>
                     <span class="label">Sunset:</span>
-                    <span class="value">{{ astro_data['sunset'] }} <i class="fas fa-moon"></i></span>
-                  </p>
+                    <span class="value"
+                      >{{ astro_data['sunset'] }} <i class="fas fa-moon"></i
+                    ></span>
                   </p>
                 </div>
               </div>
