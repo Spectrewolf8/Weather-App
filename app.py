@@ -17,6 +17,7 @@ def index():
 
 @app.route("/submit", methods=["POST"])
 def submit():
+
     query_location = request.form["place_name"].lower()
     weather_data = get_weather_data(query=query_location)
     print(weather_data)

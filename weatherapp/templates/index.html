@@ -67,12 +67,11 @@
       .form-inline {
         position: relative;
       }
-
       .autocomplete-container {
         position: absolute;
-        top: 100%;
+        top: 100%; /* Change to bottom: 0; */
         left: 0;
-        background-color: white;
+        background-color: #fff;
         width: 200px;
         border: 1px solid #ccc;
         border-radius: 4px;
@@ -95,8 +94,19 @@
       <hr />
       <form action="/submit" method="POST" class="form-inline">
         <label for="place_name" class="mr-2">Place/City/Country Name:</label>
-        <input type="text" id="place_name" name="place_name" class="form-control mr-2" />
-        <div id="autocomplete-container" class="autocomplete-container"></div>
+        <div class="position-relative">
+          <!-- Added a container for relative positioning -->
+          <input
+            type="text"
+            id="place_name"
+            list="places"
+            name="place_name"
+            class="form-control mr-2"
+          />
+          <datalist id="places" class="autocomplete-container">
+            <!-- Options will be added here by JavaScript -->
+          </datalist>
+        </div>
         <input type="reset" value="Cancel" class="btn btn-secondary mr-2" />
         <input type="submit" value="Submit" class="btn btn-primary" />
       </form>
@@ -104,36 +114,39 @@
   </body>
   <script>
     function initAutocomplete() {
+      let timeout_length = 500;
       const input = document.getElementById("place_name");
-      const container = document.getElementById("autocomplete-container");
+      const datalist = document.getElementById("places");
       let timerId = null;
 
       input.addEventListener("input", () => {
-        clearTimeout(timerId); // Clears the timer on input
+        clearTimeout(timerId);
+        datalist.innerHTML = ""; // Clear the datalist
+
+        // If the input field is empty, return early
+        if (!input.value.trim()) {
+          return;
+        }
+
         timerId = setTimeout(() => {
-          // Sets a new timer
           fetch(`/api/autocomplete?q=${input.value}`)
-            .then((response) => response.json())
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+              }
+              return response.json();
+            })
             .then((data) => {
-              // Clear the container
-              container.innerHTML = "";
-
-              // Create a new HTML element for each suggestion
               data.suggestions.forEach((suggestion) => {
-                const element = document.createElement("div");
-                element.textContent = suggestion["place"];
-                element.classList.add("autocomplete-item");
-
-                // Add a click event listener to the suggestion
-                element.addEventListener("click", () => {
-                  input.value = suggestion["place"]; // Set the input value to the suggestion
-                  container.innerHTML = ""; // Clear the container
-                });
-
-                container.appendChild(element);
+                const option = document.createElement("option");
+                option.value = suggestion["place"];
+                datalist.appendChild(option);
               });
+            })
+            .catch((error) => {
+              console.error("There was a problem with the fetch operation: ", error);
             });
-        }, 750); // Delay of 750ms
+        }, timeout_length);
       });
     }
   </script>
