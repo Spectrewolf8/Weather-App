@@ -10,15 +10,6 @@ load_dotenv()
 API_KEY = os.environ.get("API_KEY")
 
 
-# def error(request):
-#     if request.get("error"):
-#         err = request["error"]
-#         text = "Error ({error['code']}):- " + err["message"]
-#         return text
-#     else:
-#         return False
-
-
 # Weather checking module
 def get_weather_data(query):
     api_key = os.environ.get("API_KEY")

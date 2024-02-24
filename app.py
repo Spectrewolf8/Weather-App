@@ -13,7 +13,13 @@ def index():
 def submit():
     query_location = request.form["place_name"].lower()
     weather_data = get_weather_data(query=query_location)
-    context = {"weather_data": weather_data, "location": query_location}
+    context = {
+        "weather_data": weather_data,
+        "weather_condition": weather_data["current"]["condition"]["text"],
+        "location": query_location,
+    }
+    print(context)
+
     if "error" in weather_data:
         if weather_data.get("error")["code"] == 1006:
             return render_template("404.html", **context)
