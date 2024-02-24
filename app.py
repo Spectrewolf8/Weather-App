@@ -2,9 +2,12 @@ from weatherapp import get_weather_data, get_forecast_astro_data
 from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
 import os
+import requests
 
 app = Flask(__name__, template_folder="weatherapp/templates")
 CORS(app)
+
+MAPS_API_KEY = OPENCAGE_API_KEY = os.getenv("MAPS_API_KEY")
 
 
 @app.route("/")
@@ -36,9 +39,31 @@ def submit():
         return render_template("submit.html", **context)
 
 
-@app.route("/api/key", methods=["GET"])
-def get_api_key():
-    return jsonify(key=os.getenv("MAPS_API_KEY"))
+@app.route("/api/autocomplete", methods=["GET"])
+def autocomplete():
+    query = request.args.get("q")
+
+    if query:
+        # Make a request to the OpenCage Geocoding API for autocompletion
+        response = requests.get(
+            f"https://api.opencagedata.com/geocode/v1/json?q={query}&key={OPENCAGE_API_KEY}"
+        )
+        data = response.json()
+
+        # Extract relevant information for autocomplete suggestions
+        suggestions = []
+        for result in data.get("results", []):
+            # Customize the suggestion based on your needs
+            suggestion = {
+                "place": result.get("formatted"),
+                # "latitude": result.get("geometry", {}).get("lat"),
+                # "longitude": result.get("geometry", {}).get("lng"),
+            }
+            suggestions.append(suggestion)
+        # print(suggestions)
+        return jsonify({"suggestions": suggestions})
+
+    return jsonify({"error": "Missing query parameter"}), 400
 
 
 # 'error': {'code': 1006, 'message': 'No matching location found.'}}

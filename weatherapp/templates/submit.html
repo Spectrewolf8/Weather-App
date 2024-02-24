@@ -117,6 +117,26 @@
       .return-text {
         align-self: center;
       }
+
+      .autocomplete-container {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: white;
+        width: 200px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        z-index: 99;
+      }
+      .autocomplete-item {
+        padding: 10px;
+        cursor: pointer;
+        border-bottom: 1px solid #ccc;
+      }
+
+      .autocomplete-item:hover {
+        background-color: #f0f0f0;
+      }
     </style>
   </head>
   <body onload="initAutocomplete()">
@@ -303,20 +323,44 @@
       <form action="/submit" method="POST" class="form-inline">
         <label for="place_name" class="mr-2">Place/City/Country Name:</label>
         <input type="text" id="place_name" name="place_name" class="form-control mr-2" />
+        <div id="autocomplete-container" class="autocomplete-container"></div>
         <input type="submit" value="Submit" class="btn btn-primary" />
       </form>
     </div>
   </body>
   <script>
     function initAutocomplete() {
-      fetch("/api/key")
-        .then((response) => response.json())
-        .then((data) => {
-          const script = document.createElement("script");
-          script.src = `https://maps.googleapis.com/maps/api/js?key=${data.key}&libraries=places`;
-          document.body.appendChild(script);
-        });
-      new google.maps.places.Autocomplete(document.getElementById("place_name"));
+      const input = document.getElementById("place_name");
+      const container = document.getElementById("autocomplete-container");
+      let timerId = null;
+
+      input.addEventListener("input", () => {
+        clearTimeout(timerId); // Clears the timer on input
+        timerId = setTimeout(() => {
+          // Sets a new timer
+          fetch(`/api/autocomplete?q=${input.value}`)
+            .then((response) => response.json())
+            .then((data) => {
+              // Clear the container
+              container.innerHTML = "";
+
+              // Create a new HTML element for each suggestion
+              data.suggestions.forEach((suggestion) => {
+                const element = document.createElement("div");
+                element.textContent = suggestion["place"];
+                element.classList.add("autocomplete-item");
+
+                // Add a click event listener to the suggestion
+                element.addEventListener("click", () => {
+                  input.value = suggestion["place"]; // Set the input value to the suggestion
+                  container.innerHTML = ""; // Clear the container
+                });
+
+                container.appendChild(element);
+              });
+            });
+        }, 750); // Delay of 750ms
+      });
     }
   </script>
 </html>
