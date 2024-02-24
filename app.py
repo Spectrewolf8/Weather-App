@@ -1,4 +1,4 @@
-from weatherapp import get_weather_data
+from weatherapp import get_weather_data, get_forecast_astro_data
 from flask import Flask, render_template, request
 
 app = Flask(__name__, template_folder="weatherapp/templates")
@@ -13,12 +13,13 @@ def index():
 def submit():
     query_location = request.form["place_name"].lower()
     weather_data = get_weather_data(query=query_location)
+    forecast_astro_data = get_forecast_astro_data(query=query_location, days=1)
     context = {
         "weather_data": weather_data,
+        "astro_data": forecast_astro_data,
         "weather_condition": weather_data["current"]["condition"]["text"],
         "location": query_location,
     }
-    print(context)
 
     if "error" in weather_data:
         if weather_data.get("error")["code"] == 1006:
