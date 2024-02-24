@@ -11,9 +11,9 @@ API_KEY = os.environ.get("API_KEY")
 
 
 def get_weather_data(query):
-    api_key = os.environ.get("API_KEY")
+
     base_url = "http://api.weatherapi.com/v1/current.json"
-    params = {"key": api_key, "q": query, "aqi": "yes"}
+    params = {"key": API_KEY, "q": query, "aqi": "yes"}
 
     try:
         response = requests.get(base_url, params=params)
@@ -34,9 +34,8 @@ def get_weather_data(query):
 
 
 def get_forecast_astro_data(query, days):
-    api_key = os.environ.get("API_KEY")
     base_url = "http://api.weatherapi.com/v1/forecast.json"
-    params = {"key": api_key, "q": query, "days": days}
+    params = {"key": API_KEY, "q": query, "days": days}
 
     try:
         response = requests.get(base_url, params=params)
