@@ -13,10 +13,6 @@ print(API_KEY)
 
 def get_weather_data(query):
 
-    import logging
-
-    logging.info(API_KEY)
-
     base_url = "http://api.weatherapi.com/v1/current.json"
     params = {"key": API_KEY, "q": query, "aqi": "yes"}
 
