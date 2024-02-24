@@ -10,6 +10,10 @@ load_dotenv()
 API_KEY = os.environ.get("API_KEY")
 print(API_KEY)
 
+import logging
+
+logging.info(API_KEY)
+
 
 def get_weather_data(query):
 
