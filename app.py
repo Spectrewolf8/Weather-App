@@ -1,4 +1,4 @@
-from weatherapp import weather
+from weatherapp import get_weather_data
 from flask import Flask, render_template, request
 
 app = Flask(__name__, template_folder="weatherapp/templates")
@@ -11,12 +11,17 @@ def index():
 
 @app.route("/submit", methods=["POST"])
 def submit():
-    place_name = request.form["place_name"].lower()
-    weather_data = weather(query=place_name)
-    user_name = "John Doe"  # Example variable
-    context = {"weather_data": weather_data, "user_name": user_name}
-    return render_template("submit.html", **context)
+    query_location = request.form["place_name"].lower()
+    weather_data = get_weather_data(query=query_location)
+    context = {"weather_data": weather_data, "location": query_location}
+    if "error" in weather_data:
+        if weather_data.get("error")["code"] == 1006:
+            return render_template("404.html", **context)
+    else:
+        return render_template("submit.html", **context)
 
+
+# 'error': {'code': 1006, 'message': 'No matching location found.'}}
 
 if __name__ == "__main__":
     app.run(debug=True)
