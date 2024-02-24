@@ -8,6 +8,7 @@ load_dotenv()
 # Add variables in .env file
 # API Key from https://www.weatherapi.com/my/
 API_KEY = os.environ.get("API_KEY")
+print(API_KEY)
 
 
 def get_weather_data(query):
