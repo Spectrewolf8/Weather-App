@@ -107,22 +107,24 @@ def get_current_details(request):
 
 # Weather checking module
 def weather(query):
-    api = f"http://api.weatherapi.com/v1/current.json?key={API_KEY}&q={query}&aqi=yes"
-    response = requests.get(api).json()
+    api_key = os.environ.get("API_KEY")
+    base_url = "http://api.weatherapi.com/v1/current.json"
+    params = {"key": api_key, "q": query, "aqi": "yes"}
+    response = requests.get(base_url, params=params).json()
     print(response)
     text = ""
 
     if error(response):
         return error(response)
-    text += "<h3>Location Details</h3>"
-    text += get_location_details(response["location"])
-    text += "<br/><br/>"
+    # text += "<h3>Location Details</h3>"
+    # text += get_location_details(response["location"])
+    # text += "<br/><br/>"
 
-    text += "<h3>Current Weather Details</h3>"
-    text += get_current_details(response["current"])
-    text += "<br/><br/>"
+    # text += "<h3>Current Weather Details</h3>"
+    # text += get_current_details(response["current"])
+    # text += "<br/><br/>"
 
-    text += "<h3>Air Quality Details</h3>"
-    text += get_aqi(response["current"]["air_quality"])
+    # text += "<h3>Air Quality Details</h3>"
+    # text += get_aqi(response["current"]["air_quality"])
     return response
     # return text

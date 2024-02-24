@@ -13,7 +13,9 @@ def index():
 def submit():
     place_name = request.form["place_name"].lower()
     weather_data = weather(query=place_name)
-    return render_template("submit.html", weather_data=weather_data)
+    user_name = "John Doe"  # Example variable
+    context = {"weather_data": weather_data, "user_name": user_name}
+    return render_template("submit.html", **context)
 
 
 if __name__ == "__main__":

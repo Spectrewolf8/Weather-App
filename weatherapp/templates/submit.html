@@ -4,10 +4,11 @@
     <title>Weather App</title>
     <style>
       body {
-        font-family: Arial, sans-serif;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         margin: 0;
         padding: 0;
         background-color: #f0f0f0;
+        color: #333;
       }
       .container {
         max-width: 800px;
@@ -15,26 +16,70 @@
         padding: 20px;
         background-color: white;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        border-radius: 10px;
       }
-      h1 {
+      h1,
+      h2 {
         text-align: center;
         margin-bottom: 20px;
       }
-      pre {
-        background-color: #f0f0f0;
+      .magazine-layout {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-gap: 20px;
+        align-items: center;
+        justify-items: center;
+      }
+      .section {
         padding: 20px;
         border-radius: 5px;
+        background-color: #e0e0e0;
+        text-align: center;
+      }
+      .section img {
+        width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+      }
+      .return-home {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        background-color: #e0e0e0;
+        border-radius: 10px;
+        margin-top: 20px;
+      }
+      .return-home a {
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <h1>Weather Data for {{ weather_data["location"]["name"] }}</h1>
-      <pre>{{ weather_data | tojson(indent=4) }}</pre>
+      <h1>Weather Information for {{ user_name }}</h1>
+      <div class="magazine-layout">
+        <div class="section">
+          <h2>Location</h2>
+          <p>{{ weather_data['location'] }}</p>
+        </div>
+        <div class="section">
+          <h2>Current Condition</h2>
+          <p>{{ weather_data['current']['condition']['text'] }}</p>
+          <img
+            src="{{weather_data['current']['condition']['icon']}}"
+            alt="Current Weather Condition"
+          />
+        </div>
+        <div class="section">
+          <h2>Air Quality</h2>
+          <p>{{ weather_data['current']['air_quality'] }}</p>
+        </div>
+      </div>
     </div>
-    <br />
-    <hr />
-    <br />
-    <h5 align="center"><a href="/">Click Here</a> to return to home page</h5>
+    <div class="return-home"><a href="/">Click Here </a> to return to home page</div>
   </body>
 </html>
