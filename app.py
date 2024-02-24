@@ -1,7 +1,10 @@
 from weatherapp import get_weather_data, get_forecast_astro_data
-from flask import Flask, render_template, request
+from flask import Flask, jsonify, render_template, request
+from flask_cors import CORS
+import os
 
 app = Flask(__name__, template_folder="weatherapp/templates")
+CORS(app)
 
 
 @app.route("/")
@@ -31,6 +34,11 @@ def submit():
         }
 
         return render_template("submit.html", **context)
+
+
+@app.route("/api/key", methods=["GET"])
+def get_api_key():
+    return jsonify(key=os.getenv("MAPS_API_KEY"))
 
 
 # 'error': {'code': 1006, 'message': 'No matching location found.'}}

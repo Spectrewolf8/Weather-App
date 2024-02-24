@@ -9,6 +9,7 @@
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
     />
+
     <!-- Custom CSS -->
     <style>
       body {
@@ -65,7 +66,7 @@
       }
     </style>
   </head>
-  <body>
+  <body onload="initAutocomplete()">
     <div class="container">
       <h1>Welcome to Weather App</h1>
       <hr />
@@ -77,4 +78,16 @@
       </form>
     </div>
   </body>
+  <script>
+    function initAutocomplete() {
+      fetch("/api/key")
+        .then((response) => response.json())
+        .then((data) => {
+          const script = document.createElement("script");
+          script.src = `https://maps.googleapis.com/maps/api/js?key=${data.key}&libraries=places`;
+          document.body.appendChild(script);
+        });
+      new google.maps.places.Autocomplete(document.getElementById("place_name"));
+    }
+  </script>
 </html>
