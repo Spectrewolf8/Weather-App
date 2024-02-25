@@ -33,3 +33,8 @@ python app.py
 <hr/>
 
 You can use the live demo deployed on [Vercel](https://weather-or-not-app.vercel.app/).
+
+<br/>
+<br/>
+
+``This project was a part of my internship, you are free to use the code.``
