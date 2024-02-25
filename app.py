@@ -20,7 +20,6 @@ def submit():
 
     query_location = request.form["place_name"].lower()
     weather_data = get_weather_data(query=query_location)
-    print(weather_data)
     if "error" in weather_data:
         context = {
             "weather_data": weather_data,
@@ -61,7 +60,6 @@ def autocomplete():
                 # "longitude": result.get("geometry", {}).get("lng"),
             }
             suggestions.append(suggestion)
-        # print(suggestions)
         return jsonify({"suggestions": suggestions})
 
     return jsonify({"error": "Missing query parameter"}), 400

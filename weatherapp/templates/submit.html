@@ -202,44 +202,59 @@
                     <span class="value">{{ weather_data['current']['condition']['text'] }}</span>
                   </p>
                   <p>
-                    {% set weather_condition = weather_condition.lower().strip() %} {% if
-                    weather_condition == 'clear' %}
+                    {% set weather_condition = weather_condition.lower().strip() %} {% set mostly =
+                    weather_condition.startswith('mostly') %} {% set partly =
+                    weather_condition.startswith('partly') %} {% if weather_condition == 'sunny' or
+                    weather_condition == 'clear' or (mostly and 'clear' in weather_condition) or
+                    (partly and 'clear' in weather_condition) %}
                     <i class="fas fa-sun fa-10x"></i>
                     <!-- Sunny -->
-                    {% elif weather_condition == 'cloudy' %}
+                    {% elif weather_condition == 'cloudy' or (mostly and 'cloudy' in
+                    weather_condition) or (partly and 'cloudy' in weather_condition) %}
                     <i class="fas fa-cloud fa-10x"></i>
                     <!-- Cloudy -->
-                    {% elif weather_condition == 'rain' %}
+                    {% elif weather_condition == 'rain' or (mostly and 'rain' in weather_condition)
+                    or (partly and 'rain' in weather_condition) %}
                     <i class="fas fa-cloud-showers-heavy fa-10x"></i>
                     <!-- Rain -->
-                    {% elif weather_condition == 'snow' %}
+                    {% elif weather_condition == 'snow' or (mostly and 'snow' in weather_condition)
+                    or (partly and 'snow' in weather_condition) %}
                     <i class="fas fa-snowflake fa-10x"></i>
                     <!-- Snow -->
-                    {% elif weather_condition == 'thunderstorm' %}
+                    {% elif weather_condition == 'thunderstorm' or (mostly and 'thunderstorm' in
+                    weather_condition) or (partly and 'thunderstorm' in weather_condition) %}
                     <i class="fas fa-bolt fa-10x"></i>
                     <!-- Thunderstorm -->
-                    {% elif weather_condition == 'windy' %}
+                    {% elif weather_condition == 'windy' or (mostly and 'windy' in
+                    weather_condition) or (partly and 'windy' in weather_condition) %}
                     <i class="fas fa-wind fa-10x"></i>
                     <!-- Windy -->
-                    {% elif weather_condition == 'fog' %}
+                    {% elif weather_condition == 'fog' or (mostly and 'fog' in weather_condition) or
+                    (partly and 'fog' in weather_condition) %}
                     <i class="fas fa-smog fa-10x"></i>
                     <!-- Fog -->
-                    {% elif weather_condition == 'haze' %}
+                    {% elif weather_condition == 'haze' or (mostly and 'haze' in weather_condition)
+                    or (partly and 'haze' in weather_condition) %}
                     <i class="fas fa-smog fa-10x"></i>
                     <!-- Haze -->
-                    {% elif weather_condition == 'sleet' %}
+                    {% elif weather_condition == 'sleet' or (mostly and 'sleet' in
+                    weather_condition) or (partly and 'sleet' in weather_condition) %}
                     <i class="fas fa-cloud-meatball fa-10x"></i>
                     <!-- Sleet -->
-                    {% elif weather_condition == 'drizzle' %}
+                    {% elif weather_condition == 'drizzle' or (mostly and 'drizzle' in
+                    weather_condition) or (partly and 'drizzle' in weather_condition) %}
                     <i class="fas fa-cloud-rain fa-10x"></i>
                     <!-- Drizzle -->
-                    {% elif weather_condition == 'hail' %}
+                    {% elif weather_condition == 'hail' or (mostly and 'hail' in weather_condition)
+                    or (partly and 'hail' in weather_condition) %}
                     <i class="fas fa-snowflake fa-10x"></i>
                     <!-- Hail -->
-                    {% elif weather_condition == 'tornado' %}
+                    {% elif weather_condition == 'tornado' or (mostly and 'tornado' in
+                    weather_condition) or (partly and 'tornado' in weather_condition) %}
                     <i class="fas fa-poo-storm fa-10x"></i>
                     <!-- Tornado -->
-                    {% elif weather_condition == 'mist' %}
+                    {% elif weather_condition == 'mist' or (mostly and 'mist' in weather_condition)
+                    or (partly and 'mist' in weather_condition) %}
                     <i class="fas fa-smog fa-10x"></i>
                     <!-- Mist -->
                     {% else %}

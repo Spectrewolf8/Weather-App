@@ -19,7 +19,6 @@ def get_weather_data(query):
     response = requests.get(base_url, params=params)
     # Parse the response as JSON
     data = response.json()
-    print("data", data)
     # Return the parsed data
     return data
 
