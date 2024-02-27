@@ -5,7 +5,7 @@ A simple weather web application to check weather of a specific place/city/count
 ### Variables
 `API_KEY`: From [WeatherAPI.com](https://www.weatherapi.com/my/).
 <br/>
-`MAPS_API_KEY`: From [WeatherAPI.com](https://opencagedata.com/) (Geocoding API).
+`MAPS_API_KEY`: From [OpenCageData.com](https://opencagedata.com/) (Geocoding API).
 
 <hr/>
 
